@@ -1,5 +1,7 @@
 provider "aws" {
   region = var.region
+  access_key = "AKIAYS2NP5JEOI4TILVQ"
+  secret_key = "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"
 }
 
 module "networking" {
@@ -72,13 +74,13 @@ module "aws_ceritification_manager" {
   hosted_zone_id = module.hosted_zone.hosted_zone_id
 }
 
-module "rds_db_instance" {
-  source               = "./rds"
-  db_subnet_group_name = "project_rds_subnet_group"
-  subnet_groups        = tolist(module.networking.project_public_subnets)
-  rds_mysql_sg_id      = module.security_group.rds_mysql_sg_id
-  mysql_db_identifier  = "mydb"
-  mysql_username       = "dbuser"
-  mysql_password       = "dbpassword"
-  mysql_dbname         = "devprojdb"
-}
+# module "rds_db_instance" {
+#   source               = "./rds"
+#   db_subnet_group_name = "project_rds_subnet_group"
+#   subnet_groups        = tolist(module.networking.project_public_subnets)
+#   rds_mysql_sg_id      = module.security_group.rds_mysql_sg_id
+#   mysql_db_identifier  = "mydb"
+#   mysql_username       = "dbuser"
+#   mysql_password       = "dbpassword"
+#   mysql_dbname         = "devprojdb"
+# }

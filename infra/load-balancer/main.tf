@@ -8,7 +8,7 @@ resource "aws_lb" "project_lb" {
   enable_deletion_protection = false
 
   tags = {
-    Name = "project-lb"
+    Name = "testing-project-lb"
   }
 }
 

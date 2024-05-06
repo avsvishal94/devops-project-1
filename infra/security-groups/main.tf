@@ -1,23 +1,6 @@
-variable "ec2_sg_name" {}
-variable "vpc_id" {}
-variable "public_subnet_cidr_block" {}
-variable "ec2_sg_name_for_python_api" {}
-
-output "sg_ec2_sg_ssh_http_id" {
-  value = aws_security_group.ec2_sg_ssh_http.id
-}
-
-output "rds_mysql_sg_id" {
-  value = aws_security_group.rds_mysql_sg.id
-}
-
-output "sg_ec2_for_python_api" {
-  value = aws_security_group.ec2_sg_python_api.id
-
-}
 resource "aws_security_group" "ec2_sg_ssh_http" {
   name        = var.ec2_sg_name
-  description = "Enable the Port 22(SSH) & Port 80(http)"
+  description = "Enable the Port 22(SSH), Port 443(HTTPS) & Port 80(http)"
   vpc_id      = var.vpc_id
 
   # ssh for terraform remote exec
@@ -40,7 +23,7 @@ resource "aws_security_group" "ec2_sg_ssh_http" {
 
   # enable http
   ingress {
-    description = "Allow HTTP request from anywhere"
+    description = "Allow HTTPS request from anywhere"
     cidr_blocks = ["0.0.0.0/0"]
     from_port   = 443
     to_port     = 443
@@ -57,7 +40,7 @@ resource "aws_security_group" "ec2_sg_ssh_http" {
   }
 
   tags = {
-    Name = "Security Groups to allow SSH(22) and HTTP(80)"
+    Name = "Security Groups to allow SSH(22), HTTPS(443) and HTTP(80)"
   }
 }
 
@@ -71,7 +54,7 @@ resource "aws_security_group" "rds_mysql_sg" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = var.public_subnet_cidr_block # replace with your EC2 instance security group CIDR block
+    cidr_blocks = var.public_subnet_cidr_block
   }
 }
 

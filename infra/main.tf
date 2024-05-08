@@ -1,7 +1,7 @@
 provider "aws" {
   region = var.region
-  access_key = "AKIAYS2NP5JEKBNEPGIK"
-  secret_key = "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"
+  access_key = "AKIA2TENN5CVOTCIIKPH"
+  secret_key = "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"
 }
 
 module "networking" {
